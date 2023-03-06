@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "mysql2": "^3.2.0",
+    "path": "^0.12.7",
+    "sequelize": "^6.29.0",
+    "sequelize-cli": "^6.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
