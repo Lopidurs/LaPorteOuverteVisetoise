@@ -1,0 +1,7 @@
+.container {
+    max-width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1rem;
+    min-height: calc(100vh - 126px);
+}
