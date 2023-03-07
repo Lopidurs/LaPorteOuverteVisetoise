@@ -1,9 +1,11 @@
 name: Vérification des tests
 
 on:
+  pull_request:
+    branches:
+      -master
   push:
     branches:
-      - master
       - dev
 
 jobs:
@@ -14,6 +16,7 @@ jobs:
         
       - name: Checkout du code
         uses: actions/checkout@v3
+        uses: actions/setup-node@v3
 
       - name: Installer les dépendances Node.js du front
         run: npm install
@@ -21,11 +24,11 @@ jobs:
       - name: Exécuter les tests du front
         run: npm run test
         working-directory: front
+
+        
       - name: Installer les dépendances Node.js du back
         run: npm install
         working-directory: back
-      - name: Lance le backend
-        run: npm start
       - name: Exécuter les tests du back
         run: npm run test
         working-directory: back
