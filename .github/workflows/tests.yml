@@ -15,16 +15,15 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
 
+      - name: Installer les dépendances Node.js
+        run: npm install
+        working-directory: front
+      - name: Exécuter les tests
+        run: npm run test
         working-directory: front
       - name: Installer les dépendances Node.js
         run: npm install
-        
-      - name: Exécuter les tests
-        run: npm run test
-
         working-directory: back
-      - name: Installer les dépendances Node.js
-        run: npm install
-        
       - name: Exécuter les tests
         run: npm run test
+        working-directory: back
