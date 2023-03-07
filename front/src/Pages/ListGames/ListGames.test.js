@@ -19,6 +19,7 @@ describe('ListGames', () => {
                             MaxPlayer: 4,
                             KeyWords: [{ Name: 'Mot clé 1' }, { Name: 'Mot clé 2' }],
                             Release: 2021,
+                            Awards: [],
                             Status: 'Disponible'
                         }
                     ])
