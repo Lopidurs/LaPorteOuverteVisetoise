@@ -1,0 +1,30 @@
+name: Vérification des tests
+
+on:
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+        
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+        working-directory: front
+      - name: Installer les dépendances Node.js
+        run: npm install
+        
+      - name: Exécuter les tests
+        run: npm run test
+
+        working-directory: back
+      - name: Installer les dépendances Node.js
+        run: npm install
+        
+      - name: Exécuter les tests
+        run: npm run test
