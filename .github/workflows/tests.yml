@@ -1,0 +1,55 @@
+name: Vérification des tests
+
+on:
+  pull_request:
+    branches:
+      -master
+  push:
+    branches:
+      - dev
+
+jobs:
+  frontend_test:
+    runs-on: ubuntu-latest
+
+    steps:
+        
+      - name: Checkout du code
+        uses: actions/checkout@v3
+      - name: Installer les dépendances Node.js du front
+        run: npm install
+        working-directory: front
+      - name: Exécuter les tests du front
+        run: npm run test
+        working-directory: front
+
+  backend_test:
+
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: porte_ouverte
+        ports:
+        - 32574:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v3
+    - name: Installer les dépendances Node.js du back
+      run: npm install
+      working-directory: back
+    - name: lancer le back
+      env:
+        NODE_ENV: test
+      run: npm start &
+      working-directory: back
+    - name: Exécuter les tests du back
+      env:
+        NODE_ENV: test
+      run: npm run test
+      working-directory: back

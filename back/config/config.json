@@ -8,9 +8,10 @@
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "porte_ouverte_test",
+    "password": "password",
+    "database": "porte_ouverte",
     "host": "127.0.0.1",
+    "port":"32574",
     "dialect": "mysql"
   },
   "production": {
