@@ -9,14 +9,13 @@ on:
       - dev
 
 jobs:
-  test_front:
+  frontend_test:
     runs-on: ubuntu-latest
 
     steps:
         
       - name: Checkout du code
         uses: actions/checkout@v3
-
       - name: Installer les dépendances Node.js du front
         run: npm install
         working-directory: front
@@ -24,7 +23,8 @@ jobs:
         run: npm run test
         working-directory: front
 
-  test_back:
+  backend_test:
+    runs-on: ubuntu-latest
         uses: actions/setup-node@v3
       - name: Installer les dépendances Node.js du back
         run: npm install
