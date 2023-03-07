@@ -43,6 +43,7 @@ jobs:
         working-directory: back
       - name: Exécuter les tests du back
         env:
+          NODE_ENV: test
           DB_HOST: db
           DB_USER: root
           DB_PASSWORD: password
