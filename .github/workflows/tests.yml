@@ -27,7 +27,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-      steps:
+    steps:
 
       - name: Checkout du code
         uses: actions/checkout@v3
