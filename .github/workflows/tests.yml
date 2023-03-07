@@ -32,7 +32,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: 
-          MYSQL_DATABASE: porte_ouverte
+          MYSQL_DATABASE: porte_ouverte_test
 
     steps:
 
