@@ -27,12 +27,17 @@ jobs:
 
     runs-on: ubuntu-latest
 
+      services:
+      db:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 
+          MYSQL_DATABASE: porte_ouverte
+
     steps:
 
       - name: Checkout du code
         uses: actions/checkout@v3
-      - name: Inistallisation de node  
-        uses: actions/setup-node@v3
       - name: Installer les dépendances Node.js du back
         run: npm install
         working-directory: back
