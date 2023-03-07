@@ -24,7 +24,11 @@ jobs:
         working-directory: front
 
   backend_test:
+
     runs-on: ubuntu-latest
+
+      steps:
+      
         uses: actions/setup-node@v3
       - name: Installer les dépendances Node.js du back
         run: npm install
