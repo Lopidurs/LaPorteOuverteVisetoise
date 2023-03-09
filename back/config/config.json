@@ -10,7 +10,7 @@
     "username": "root",
     "password": "password",
     "database": "porte_ouverte",
-    "host": "localhost:32574",
+    "host": "db:32574",
     "dialect": "mysql"
   },
   "production": {
