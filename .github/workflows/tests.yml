@@ -37,6 +37,7 @@ jobs:
     steps:
     - name: Verify MySQL connection from host
       run: |
+        apt-get update
         apt-get install -y mysql-client
         mysql --host db -uroot -ppassword -e "SHOW DATABASES"
     - name: Checkout du code
