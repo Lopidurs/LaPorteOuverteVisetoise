@@ -27,15 +27,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: porte_ouverte
+    env:
+      NODE_ENV: test
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_DATABASE: porte_ouverte
 
     steps:
 
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD}}
       - name: Checkout du code
         uses: actions/checkout@v3
       - name: Installer les dépendances Node.js du back
@@ -45,11 +48,5 @@ jobs:
         run: npm start
         working-directory: back
       - name: Exécuter les tests du back
-        env:
-          NODE_ENV: test
-          DB_HOST: db
-          DB_USER: root
-          DB_PASSWORD: password
-          DB_NAME: porte_ouverte
         run: npm run test
         working-directory: back
