@@ -37,7 +37,8 @@ jobs:
         - 32574:3306
 
     steps:
-        
+        env:
+          NODE_ENV: test
       - name: Checkout du code
         uses: actions/checkout@v3
       - name: Installer les dépendances Node.js du back
