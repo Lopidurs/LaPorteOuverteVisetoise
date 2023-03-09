@@ -37,7 +37,7 @@ jobs:
     steps:
     - name: Verify MySQL connection from host
       run: |
-        sudo apt-get install -y mysql-client
+        apt-get install -y mysql-client
         mysql --host db -uroot -ppassword -e "SHOW DATABASES"
     - name: Checkout du code
       uses: actions/checkout@v3
