@@ -15,11 +15,14 @@ const db = require('./models')
 const GameRouter = require('./routes/Games')
 app.use("/API/games", GameRouter)
 
-// const TypeRouter = require('./routes/Types')
-// app.use("/API/types", TypeRouter)
+const TypeRouter = require('./routes/Types')
+app.use("/API/types", TypeRouter)
 
-// const KeyWordsRouter = require('./routes/KeyWords')
-// app.use("/API/keyWords", KeyWordsRouter)
+const KeyWordsRouter = require('./routes/KeyWords')
+app.use("/API/keyWords", KeyWordsRouter)
+
+const AwardsRouter = require('./routes/Awards')
+app.use("/API/awards", AwardsRouter)
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
