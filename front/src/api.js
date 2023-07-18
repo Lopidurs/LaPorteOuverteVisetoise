@@ -20,6 +20,10 @@ export function getTypes() {
     return basiqueGet('types')
 }
 
+export function getUsers() {
+    return basiqueGet('users')
+}
+
 //POST
 function basiquePost(route, data) {
     return fetch('http://localhost:3001/API/' + route, {

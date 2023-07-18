@@ -33,10 +33,6 @@ function FormGame({ submitRef }) {
         Description: ''
     }
 
-    // const submit = (values) => {
-    //     postNewGame(values)
-    // }
-
     const [awards, setAwards] = useState([])
     const [keyWords, setKeywords] = useState([])
     const [types, setTypes] = useState([])

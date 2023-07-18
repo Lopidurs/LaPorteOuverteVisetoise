@@ -24,6 +24,9 @@ app.use("/API/keyWords", KeyWordsRouter)
 const AwardsRouter = require('./routes/Awards')
 app.use("/API/awards", AwardsRouter)
 
+const UsersRouter = require('./routes/Users')
+app.use("/API/users", UsersRouter)
+
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {
         console.log(`Server listening on ${PORT}`);
