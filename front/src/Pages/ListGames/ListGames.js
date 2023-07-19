@@ -2,6 +2,7 @@ import './ListGames.css'
 import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { StyledEngineProvider } from '@mui/material/styles'
+import { getGames } from '../../api.js'
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 69 },
@@ -19,18 +20,11 @@ const columns = [
 
 function ListGames() {
     const [ListGames, setListGames] = useState([])
-    function loadGames() {
-        fetch('http://localhost:3001/API/games', {
-            method: 'GET'
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setListGames(data)
-            })
-    }
 
     useEffect(() => {
-        loadGames()
+        getGames().then((data) => {
+            setListGames(data)
+        })
     }, [])
 
     function formDate(date) {
