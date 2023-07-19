@@ -13,16 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        
       - name: Checkout du code
         uses: actions/checkout@v3
-      - name: Installer les dépendances Node.js du front
+      - name: Installer les dépendances
         run: npm install
-        working-directory: front
+        working-directory: front      
       - name: Exécuter les tests du front
-        run: npm run test
-        working-directory: front
-
+        run:  npx cypress run --component
+        working-directory: front      
+        
   backend_test:
 
     runs-on: ubuntu-latest

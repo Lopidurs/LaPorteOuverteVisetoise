@@ -3,7 +3,8 @@ module.exports = (sequelize, DataType) => {
     const Awards = sequelize.define("Awards", {
         Name: {
             type: DataType.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         }
     })
 

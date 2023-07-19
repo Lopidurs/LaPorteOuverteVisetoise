@@ -27,12 +27,15 @@ app.use("/API/awards", AwardsRouter)
 const UsersRouter = require('./routes/Users')
 app.use("/API/users", UsersRouter)
 
-db.sequelize.sync().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server listening on ${PORT}`);
-    });
-}).catch((err) => {
-    console.log(err)
-})
+if (process.env.NODE_ENV !== 'test') {
+    db.sequelize.sync().then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server listening on ${PORT}`)
+        });
+    }).catch((err) => {
+        console.log(err)
+    })
+}
+
 
 module.exports = app;

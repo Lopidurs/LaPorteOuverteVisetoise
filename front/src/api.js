@@ -24,6 +24,10 @@ export function getUsers() {
     return basiqueGet('users')
 }
 
+export function getGames() {
+    return basiqueGet('games')
+}
+
 //POST
 function basiquePost(route, data) {
     return fetch('http://localhost:3001/API/' + route, {

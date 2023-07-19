@@ -3,7 +3,8 @@ module.exports = (sequelize, DataKeyWords) => {
     const KeyWords = sequelize.define("KeyWords", {
         Name: {
             type: DataKeyWords.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         }
     })
 
