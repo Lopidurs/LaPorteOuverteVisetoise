@@ -13,7 +13,7 @@ const columns = [
     { field: 'PhoneNumber', headerName: 'Téléphone', width: 200 },
     { field: 'ZipCode', headerName: 'Code postal', width: 200 },
     { field: 'City', headerName: 'Ville', width: 200 },
-    { field: 'Street', headerName: 'Rue', width: 200 }
+    { field: 'Address', headerName: 'Adresse', width: 200 }
 ]
 
 function ListUsers() {
@@ -34,7 +34,7 @@ function ListUsers() {
             PhoneNumber: user.PhoneNumber,
             ZipCode: user.ZipCode,
             City: user.City,
-            Street: user.Street
+            Address: user.Address
         }
     })
 
