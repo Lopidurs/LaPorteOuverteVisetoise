@@ -29,10 +29,6 @@ module.exports = (sequelize, DataType) => {
             type: DataType.STRING,
             allowNull: false
         },
-        Street: {
-            type: DataType.STRING,
-            allowNull: false
-        },
         Password: {
             type: DataType.STRING,
             allowNull: false
