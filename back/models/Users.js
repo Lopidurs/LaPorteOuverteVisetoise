@@ -31,7 +31,7 @@ module.exports = (sequelize, DataType) => {
         },
         Password: {
             type: DataType.STRING,
-            allowNull: false
+            defaultValue: "",
         },
         isStaff: {
             type: DataType.BOOLEAN,

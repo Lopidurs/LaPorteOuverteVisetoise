@@ -45,3 +45,7 @@ function basiquePost(route, data) {
 export function postNewGame(data) {
     return basiquePost('games', data)
 }
+
+export function postNewUser(data) {
+    return basiquePost('users', data)
+}
