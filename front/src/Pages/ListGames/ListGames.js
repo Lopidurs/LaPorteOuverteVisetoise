@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { StyledEngineProvider } from '@mui/material/styles'
 import { getGames } from '../../api.js'
+import { useNavigate } from 'react-router-dom'
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 69 },
@@ -20,6 +21,7 @@ const columns = [
 
 function ListGames() {
     const [ListGames, setListGames] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         getGames().then((data) => {
@@ -61,7 +63,15 @@ function ListGames() {
         <div className="container">
             <StyledEngineProvider injectFirst>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} pageSize={1} rowsPerPageOptions={[5]} />
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={1}
+                        rowsPerPageOptions={[5]}
+                        onRowDoubleClick={(event) => {
+                            navigate(`/detailsGames/${event.row.id}`)
+                        }}
+                    />
                 </div>
             </StyledEngineProvider>
         </div>

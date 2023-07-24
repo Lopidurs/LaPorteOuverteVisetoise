@@ -4,12 +4,15 @@ import * as yup from 'yup'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
+import Select from '@mui/material/Select'
+import Option from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
 
+import UpdateModal from '../UpdateModal/UpdateModal.js'
 import { getAwards, getKeywords, getTypes, postNewGame } from '../../../api'
 
-function FormGame({ submitRef }) {
+function FormGame({ submitRef, game }) {
     const validationSchema = yup.object({
         Name: yup.string().required('Requis'),
         Age: yup.number().required('Requis').min(0),
@@ -19,23 +22,35 @@ function FormGame({ submitRef }) {
         Brand: yup.string().required('Requis')
     })
 
-    const initialValues = {
-        Name: '',
-        Age: '',
-        Status: 'Disponnible',
-        Types: [],
-        MinPlayer: '',
-        MaxPlayer: '',
-        Release: '',
-        Brand: '',
-        KeyWords: [],
-        Awards: [],
-        Description: ''
+    let initialValues = {
+        Id: game.id ?? '',
+        Name: game.Name ?? '',
+        Age: game.Age ?? '',
+        Status: game.Status ?? 'Disponible',
+        Types: game.Types ?? [],
+        MinPlayer: game.MinPlayer ?? '',
+        MaxPlayer: game.MaxPlayer ?? '',
+        Release: game.Release ?? '',
+        Brand: game.Brand ?? '',
+        KeyWords: game.KeyWords ?? [],
+        Awards: game.Awards ?? [],
+        Description: game.Description ?? ''
     }
 
     const [awards, setAwards] = useState([])
     const [keyWords, setKeywords] = useState([])
     const [types, setTypes] = useState([])
+    const [disableStatus, setDisableStatus] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
+
+    useEffect(() => {
+        if (!game.Status || game.Status === 'Loué') {
+            setDisableStatus(true)
+        } else {
+            setDisableStatus(false)
+        }
+    }, [game.Status])
+
     function getAutocompleteData() {
         getAwards().then((data) => {
             setAwards(data.map((obj) => obj))
@@ -55,16 +70,24 @@ function FormGame({ submitRef }) {
         }
     }, [])
 
+    function sendForm(newGame) {
+        if (game.id) {
+            setModalOpen(true)
+        } else {
+            postNewGame(newGame)
+        }
+    }
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={postNewGame}>
+            onSubmit={sendForm}>
             {({ handleChange, values, setFieldValue, touched, errors, handleSubmit }) => (
                 <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={1}>
-                            <TextField disabled fullWidth name="Id" label="Id" />
+                            <TextField disabled fullWidth name="Id" label="Id" value={values.Id} />
                         </Grid>
                         <Grid item xs={12} sm={5}>
                             <TextField
@@ -92,20 +115,27 @@ function FormGame({ submitRef }) {
                             />
                         </Grid>
                         <Grid item xs={12} sm={5}>
-                            <TextField
+                            <Select
                                 fullWidth
-                                disabled
-                                name="Status"
+                                disabled={disableStatus}
                                 label="Etat"
-                                value={values.Status}
+                                name="Status"
                                 onChange={handleChange}
-                            />
+                                value={values.Status}>
+                                <Option value="Disponible">Disponible</Option>
+                                <Option value="En réparation">En réparation</Option>
+                                <Option value="Déclassé">Déclassé</Option>
+                                <Option disabled value="Loué">
+                                    Loué
+                                </Option>
+                            </Select>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Autocomplete
                                 multiple
                                 name="Types"
                                 options={types}
+                                isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
                                 renderInput={(params) => <TextField {...params} label="Types" />}
                                 value={values.Types}
@@ -172,6 +202,7 @@ function FormGame({ submitRef }) {
                                 multiple
                                 name="KeyWords"
                                 options={keyWords}
+                                isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
                                 renderInput={(params) => (
                                     <TextField {...params} label="Mots clés" />
@@ -190,6 +221,7 @@ function FormGame({ submitRef }) {
                                 multiple
                                 name="Awards"
                                 options={awards}
+                                isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
                                 renderInput={(params) => <TextField {...params} label="Prix" />}
                                 value={values.Awards}
@@ -216,6 +248,7 @@ function FormGame({ submitRef }) {
                         </Grid>
                         <button ref={submitRef} type="submit" style={{ display: 'none' }} />
                     </Grid>
+                    <UpdateModal open={modalOpen} setOpen={setModalOpen} game={values} />
                 </Box>
             )}
         </Formik>
@@ -223,7 +256,8 @@ function FormGame({ submitRef }) {
 }
 
 FormGame.propTypes = {
-    submitRef: PropTypes.object
+    submitRef: PropTypes.object,
+    game: PropTypes.object
 }
 
 export default FormGame
