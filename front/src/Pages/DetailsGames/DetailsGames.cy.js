@@ -29,7 +29,7 @@ describe('<DetailsGames />', () => {
         cy.get('input[name=Release]').type('1935')
         cy.get('input[name=Brand]').type('Hasbro')
 
-        cy.get('.MuiStack-root > .MuiButtonBase-root').click()
+        cy.get('[tabindex="0"]').click()
         cy.get('body').should('not.contain', 'Requis')
     })
 
@@ -44,7 +44,7 @@ describe('<DetailsGames />', () => {
         cy.get('input[name=Release]').type('1935')
         cy.get('input[name=Brand]').type('Hasbro')
 
-        cy.get('.MuiStack-root > .MuiButtonBase-root').click()
+        cy.get('[tabindex="0"]').click()
         cy.get('body').should('contain', 'Requis')
     })
 })

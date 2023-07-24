@@ -1,6 +1,17 @@
+const URL = 'http://localhost:3001'
+
 //GET
-function basiqueGet(route) {
-    return fetch('http://localhost:3001/API/' + route, {
+function basiqueGetAll(route) {
+    return fetch(URL + '/API/' + route, {
+        method: 'GET'
+    }).then((res) => {
+        if (res.status === 200) return res.json()
+        else throw new Error('Invalid response')
+    })
+}
+
+function basiqueGet(route, id) {
+    return fetch(URL + '/API/' + route + '?id=' + id, {
         method: 'GET'
     }).then((res) => {
         if (res.status === 200) return res.json()
@@ -9,28 +20,32 @@ function basiqueGet(route) {
 }
 
 export function getAwards() {
-    return basiqueGet('awards')
+    return basiqueGetAll('awards')
 }
 
 export function getKeywords() {
-    return basiqueGet('keywords')
+    return basiqueGetAll('keywords')
 }
 
 export function getTypes() {
-    return basiqueGet('types')
+    return basiqueGetAll('types')
 }
 
 export function getUsers() {
-    return basiqueGet('users')
+    return basiqueGetAll('users')
 }
 
 export function getGames() {
-    return basiqueGet('games')
+    return basiqueGetAll('games')
+}
+
+export function getGame(id) {
+    return basiqueGet('games/details', id)
 }
 
 //POST
 function basiquePost(route, data) {
-    return fetch('http://localhost:3001/API/' + route, {
+    return fetch(URL + '/API/' + route, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -49,3 +64,29 @@ export function postNewGame(data) {
 export function postNewUser(data) {
     return basiquePost('users', data)
 }
+
+//PUT
+export function updateGame(data) {
+    return fetch(URL + '/API/games', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then((res) => {
+        if (res.status === 200) return res.json()
+        else throw new Error('Invalid response')
+    })
+}
+
+// export function rentGame(id) {
+//     fetch(URL + '/API/games/rent', {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ id: id })
+//     }).then((res) => {
+//         if (res.status === 200) return res.json()
+//     })
+// }
