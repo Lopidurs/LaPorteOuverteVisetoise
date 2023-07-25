@@ -29,9 +29,17 @@ module.exports = (sequelize, DataType) => {
             type: DataType.STRING,
             allowNull: false
         },
+        Association: {
+            type: DataType.STRING,
+        },
         Password: {
             type: DataType.STRING,
             defaultValue: "",
+        },
+        AgreesImageRights: {
+            type: DataType.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         isStaff: {
             type: DataType.BOOLEAN,

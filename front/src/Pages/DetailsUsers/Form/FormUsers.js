@@ -1,15 +1,20 @@
 /* eslint-disable no-unused-vars */
-import { Formik } from 'formik'
+import { Form, Formik } from 'formik'
 import * as yup from 'yup'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import InputLabel from '@mui/material/InputLabel'
+import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 
 import { postNewUser } from '../../../api'
+import { FormControlLabel, FormGroup } from '@mui/material'
 
 function FormGame({ submitRef }) {
     const [phone, setPhone] = useState('')
@@ -24,6 +29,7 @@ function FormGame({ submitRef }) {
                 return matchIsValidTel(value)
             }),
         Address: yup.string().required('Requis'),
+        Association: yup.string(),
         City: yup.string().required('Requis'),
         ZipCode: yup.string().required('Requis')
     })
@@ -35,7 +41,9 @@ function FormGame({ submitRef }) {
         PhoneNumber: '',
         Address: '',
         City: '',
+        Association: '',
         ZipCode: '',
+        AgreesImageRights: '',
         CreatedAt: ''
     }
 
@@ -47,7 +55,7 @@ function FormGame({ submitRef }) {
             {({ handleChange, values, touched, errors, handleSubmit }) => (
                 <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={1}>
+                        <Grid item xs={12} sm={2}>
                             <TextField disabled fullWidth name="Id" label="Id" />
                         </Grid>
                         <Grid item xs={12} sm={4}>
@@ -74,7 +82,7 @@ function FormGame({ submitRef }) {
                                 helperText={touched.FirstName && errors.FirstName}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={3}>
+                        <Grid item xs={12} sm={2}>
                             <TextField
                                 disabled
                                 fullWidth
@@ -82,7 +90,7 @@ function FormGame({ submitRef }) {
                                 label="Date d'enregistrement"
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={5}>
                             <TextField
                                 required
                                 fullWidth
@@ -94,7 +102,7 @@ function FormGame({ submitRef }) {
                                 helperText={touched.Email && errors.Email}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={3}>
+                        <Grid item xs={12} sm={2}>
                             <TextField
                                 required
                                 fullWidth
@@ -118,7 +126,23 @@ function FormGame({ submitRef }) {
                                 helperText={touched.City && errors.City}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={9}>
+                        <Grid item xs={12} sm={2}>
+                            <FormControl fullWidth>
+                                <InputLabel id="select-label">Droit à l&apos;image</InputLabel>
+                                <Select
+                                    fullWidth
+                                    labelId="select-label"
+                                    label="Droit à l'image"
+                                    name="AgreesImageRights"
+                                    defaultValue={'false'}
+                                    onChange={handleChange}
+                                    value={values.Status}>
+                                    <MenuItem value={true}>Oui</MenuItem>
+                                    <MenuItem value={false}>Non</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 required
                                 fullWidth
@@ -128,6 +152,17 @@ function FormGame({ submitRef }) {
                                 onChange={handleChange}
                                 error={touched.Address && Boolean(errors.Address)}
                                 helperText={touched.Address && errors.Address}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <TextField
+                                fullWidth
+                                name="Association"
+                                label="Association"
+                                value={values.Association}
+                                onChange={handleChange}
+                                error={touched.Association && Boolean(errors.Association)}
+                                helperText={touched.Association && errors.Association}
                             />
                         </Grid>
                         <Grid item xs={12} sm={3}>
