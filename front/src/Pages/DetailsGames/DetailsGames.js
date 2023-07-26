@@ -16,7 +16,9 @@ function DetailsGames() {
     if (id) {
         useEffect(() => {
             getGame(id).then((data) => {
-                setGame(data)
+                if (data) {
+                    setGame(data)
+                }
             })
         }, [])
     }

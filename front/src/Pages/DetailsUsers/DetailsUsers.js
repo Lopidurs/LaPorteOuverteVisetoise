@@ -16,7 +16,9 @@ function DetailsUsers() {
     if (id) {
         useEffect(() => {
             getUser(id).then((data) => {
-                setUser(data)
+                if (data) {
+                    setUser(data)
+                }
             })
         }, [])
     }
