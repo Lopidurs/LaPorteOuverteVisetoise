@@ -9,7 +9,7 @@ import Option from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
 
-import UpdateModal from '../UpdateModal/UpdateModal.js'
+import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 import { getAwards, getKeywords, getTypes, postNewGame } from '../../../api'
 
 function FormGame({ submitRef, game }) {
@@ -248,7 +248,12 @@ function FormGame({ submitRef, game }) {
                         </Grid>
                         <button ref={submitRef} type="submit" style={{ display: 'none' }} />
                     </Grid>
-                    <UpdateModal open={modalOpen} setOpen={setModalOpen} game={values} />
+                    <UpdateModal
+                        open={modalOpen}
+                        setOpen={setModalOpen}
+                        data={values}
+                        type={'game'}
+                    />
                 </Box>
             )}
         </Formik>

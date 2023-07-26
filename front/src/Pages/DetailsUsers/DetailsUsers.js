@@ -1,11 +1,26 @@
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Form from './Form/FormUsers.js'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
+import { getUser } from '../../api.js'
+import { useParams } from 'react-router-dom'
 
 function DetailsUsers() {
     const submitRef = useRef()
+
+    const id = useParams().id
+
+    const [user, setUser] = useState({})
+
+    if (id) {
+        useEffect(() => {
+            getUser(id).then((data) => {
+                setUser(data)
+            })
+        }, [])
+    }
+
     return (
         <div className="container">
             <Grid container spacing={2}>
@@ -20,7 +35,7 @@ function DetailsUsers() {
                     </Stack>
                 </Grid>
                 <Grid item xs={12} sm={10}>
-                    <Form submitRef={submitRef} />
+                    <Form submitRef={submitRef} user={user} />
                 </Grid>
             </Grid>
         </div>
