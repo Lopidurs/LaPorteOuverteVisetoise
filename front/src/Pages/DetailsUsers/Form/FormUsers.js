@@ -10,13 +10,13 @@ import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
-
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 
-import { postNewUser } from '../../../api'
-import { FormControlLabel, FormGroup } from '@mui/material'
+import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 
-function FormGame({ submitRef }) {
+import { postNewUser } from '../../../api'
+
+function FormGame({ submitRef, user }) {
     const [phone, setPhone] = useState('')
 
     const validationSchema = yup.object({
@@ -35,28 +35,40 @@ function FormGame({ submitRef }) {
     })
 
     const initialValues = {
-        FirstName: '',
-        LastName: '',
-        Email: '',
-        PhoneNumber: '',
-        Address: '',
-        City: '',
-        Association: '',
-        ZipCode: '',
-        AgreesImageRights: '',
-        CreatedAt: ''
+        id: user.id ?? '',
+        FirstName: user.FirstName ?? '',
+        LastName: user.LastName ?? '',
+        Email: user.Email ?? '',
+        PhoneNumber: user.PhoneNumber ?? '',
+        Address: user.Address ?? '',
+        City: user.City ?? '',
+        Association: user.Association ?? '',
+        ZipCode: user.ZipCode ?? '',
+        AgreesImageRights: user.AgreesImageRights ?? '',
+        createdAt: user.createdAt ?? ''
+    }
+
+    const [modalOpen, setModalOpen] = useState(false)
+
+    function sendForm(newUser) {
+        if (user.id) {
+            setModalOpen(true)
+        } else {
+            postNewUser(newUser)
+        }
     }
 
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={postNewUser}>
+            onSubmit={sendForm}>
             {({ handleChange, values, touched, errors, handleSubmit }) => (
                 <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={2}>
-                            <TextField disabled fullWidth name="Id" label="Id" />
+                            <TextField disabled fullWidth name="id" label="Id" value={values.id} />
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <TextField
@@ -88,6 +100,7 @@ function FormGame({ submitRef }) {
                                 fullWidth
                                 name="CreatedAt"
                                 label="Date d'enregistrement"
+                                value={values.createdAt.slice(0, 10)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={5}>
@@ -134,9 +147,8 @@ function FormGame({ submitRef }) {
                                     labelId="select-label"
                                     label="Droit à l'image"
                                     name="AgreesImageRights"
-                                    defaultValue={'false'}
                                     onChange={handleChange}
-                                    value={values.Status}>
+                                    value={values.AgreesImageRights}>
                                     <MenuItem value={true}>Oui</MenuItem>
                                     <MenuItem value={false}>Non</MenuItem>
                                 </Select>
@@ -183,6 +195,12 @@ function FormGame({ submitRef }) {
                         </Grid>
                         <button ref={submitRef} type="submit" style={{ display: 'none' }} />
                     </Grid>
+                    <UpdateModal
+                        open={modalOpen}
+                        setOpen={setModalOpen}
+                        data={values}
+                        type={' user '}
+                    />
                 </Box>
             )}
         </Formik>
@@ -190,7 +208,8 @@ function FormGame({ submitRef }) {
 }
 
 FormGame.propTypes = {
-    submitRef: PropTypes.object
+    submitRef: PropTypes.object,
+    user: PropTypes.object
 }
 
 export default FormGame
