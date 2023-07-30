@@ -7,6 +7,7 @@ import {
     DialogContentText,
     DialogTitle
 } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import { postNewRental } from '../../../api'
 import PropTypes from 'prop-types'
 
@@ -17,6 +18,8 @@ const ValidationModal = ({ values, open, setOpen, id }) => {
         [open]
     )
     const hasCommonIds = useMemo(() => hasCommonId(values), [open])
+
+    let navigate = useNavigate()
 
     function hasCommonId(values) {
         const ids = new Set()
@@ -35,6 +38,7 @@ const ValidationModal = ({ values, open, setOpen, id }) => {
 
     const handleSave = () => {
         postNewRental(values, id)
+        navigate(`/listUsers`)
     }
 
     return (

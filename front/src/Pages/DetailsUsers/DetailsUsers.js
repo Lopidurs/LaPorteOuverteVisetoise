@@ -35,8 +35,13 @@ function DetailsUsers() {
                             onClick={() => submitRef.current.click()}>
                             Enregistrer
                         </Button>
-                        <Button variant="contained" onClick={() => navigate(`/rental/${id}`)}>
-                            Nouvelle rental
+                        {id && (
+                            <Button variant="contained" onClick={() => navigate(`/rental/${id}`)}>
+                                Nouvelle location
+                            </Button>
+                        )}
+                        <Button variant="outlined" onClick={() => navigate(`/ListUsers`)}>
+                            Retour
                         </Button>
                     </Stack>
                 </Grid>

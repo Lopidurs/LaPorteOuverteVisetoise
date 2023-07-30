@@ -1,7 +1,14 @@
+@import url(https://db.onlinewebfonts.com/c/bb2e1211dfd31103079dbce7c49e1d4e?family=DIN+Neuzeit+Grotesk+LT+W01+BdCn);
+@import url(https://db.onlinewebfonts.com/c/06190fb370e952fa10fad4dd11876d63?family=Futura+Light);
+
 .container {
     max-width: 90%;
     margin-right: auto;
     margin-left: auto;
     padding: 1rem;
     min-height: calc(100vh - 126px);
+}
+
+body {
+    margin: 0px;
 }

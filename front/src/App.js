@@ -9,11 +9,14 @@ import DetailsGames from './Pages/DetailsGames/DetailsGames'
 import ListUsers from './Pages/ListUsers/ListUsers'
 import DetailsUsers from './Pages/DetailsUsers/DetailsUsers'
 import Rental from './Pages/Rental/Rental'
+import Header from './Components/Header/Header'
+import Footer from './Components/Footer/Footer'
 
 function App() {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <BrowserRouter>
+                <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/listGames" element={<ListGames />} />
@@ -24,6 +27,7 @@ function App() {
                     <Route path="/detailsUsers" element={<DetailsUsers />} />
                     <Route path="/rental/:id" element={<Rental />} />
                 </Routes>
+                <Footer />
             </BrowserRouter>
         </LocalizationProvider>
     )
