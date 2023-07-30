@@ -45,7 +45,9 @@ module.exports = (sequelize, DataTypes) => {
 
             Games.belongsToMany(models.KeyWords, { through: 'Games_KeyWords' }),
 
-            Games.belongsToMany(models.Awards, { through: 'Games_Awards' })
+            Games.belongsToMany(models.Awards, { through: 'Games_Awards' }),
+
+            Games.hasMany(models.Rentals)
 
     }
     return Games;

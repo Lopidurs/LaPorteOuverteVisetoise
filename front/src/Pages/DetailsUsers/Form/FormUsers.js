@@ -16,7 +16,7 @@ import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 
 import { postNewUser } from '../../../api'
 
-function FormGame({ submitRef, user }) {
+function FormUsers({ submitRef, user }) {
     const [phone, setPhone] = useState('')
 
     const validationSchema = yup.object({
@@ -207,9 +207,9 @@ function FormGame({ submitRef, user }) {
     )
 }
 
-FormGame.propTypes = {
+FormUsers.propTypes = {
     submitRef: PropTypes.object,
     user: PropTypes.object
 }
 
-export default FormGame
+export default FormUsers

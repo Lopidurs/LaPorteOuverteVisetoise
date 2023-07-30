@@ -27,6 +27,9 @@ app.use("/API/awards", AwardsRouter)
 const UsersRouter = require('./routes/Users')
 app.use("/API/users", UsersRouter)
 
+const RentalsRouter = require('./routes/Rentals')
+app.use("/API/rentals", RentalsRouter)
+
 if (process.env.NODE_ENV !== 'test') {
     db.sequelize.sync().then(() => {
         app.listen(PORT, () => {
