@@ -4,6 +4,8 @@ import { DataGrid } from '@mui/x-data-grid'
 import { StyledEngineProvider } from '@mui/material/styles'
 import { getGames } from '../../api.js'
 import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 69 },
@@ -61,6 +63,11 @@ function ListGames() {
 
     return (
         <div className="container">
+            <Grid container justifyContent="right" my={2}>
+                <Button variant="contained" onClick={() => navigate(`/DetailsGames`)}>
+                    Ajouter un jeu
+                </Button>
+            </Grid>
             <StyledEngineProvider injectFirst>
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid

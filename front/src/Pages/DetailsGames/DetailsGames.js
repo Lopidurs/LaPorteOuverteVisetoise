@@ -4,10 +4,11 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { getGame } from '../../api.js'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 function DetailsGames() {
     const submitRef = useRef()
+    const navigate = useNavigate()
 
     const id = useParams().id
 
@@ -33,6 +34,9 @@ function DetailsGames() {
                             type="submit"
                             onClick={() => submitRef.current.click()}>
                             Enregistrer
+                        </Button>
+                        <Button variant="outlined" onClick={() => navigate(`/ListGames`)}>
+                            Retour
                         </Button>
                     </Stack>
                 </Grid>

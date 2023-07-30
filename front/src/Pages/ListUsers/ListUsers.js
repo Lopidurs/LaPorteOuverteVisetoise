@@ -2,6 +2,9 @@ import './ListUsers.css'
 import { useState, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { StyledEngineProvider } from '@mui/material/styles'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import { useNavigate } from 'react-router-dom'
 
 import { getUsers } from '../../api.js'
 
@@ -18,6 +21,8 @@ const columns = [
 
 function ListUsers() {
     const [ListUsers, setListUsers] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getUsers().then((data) => {
@@ -40,9 +45,22 @@ function ListUsers() {
 
     return (
         <div className="container">
+            <Grid container justifyContent="right" my={2}>
+                <Button variant="contained" onClick={() => navigate(`/DetailsUsers`)}>
+                    Ajouter un utilisateur
+                </Button>
+            </Grid>
             <StyledEngineProvider injectFirst>
                 <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid rows={rows} columns={columns} pageSize={1} rowsPerPageOptions={[5]} />
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        pageSize={1}
+                        rowsPerPageOptions={[5]}
+                        onRowDoubleClick={(event) => {
+                            navigate(`/detailsUsers/${event.row.id}`)
+                        }}
+                    />
                 </div>
             </StyledEngineProvider>
         </div>
