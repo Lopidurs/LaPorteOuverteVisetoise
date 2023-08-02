@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { getUser } from '../../api.js'
 import { useParams, useNavigate } from 'react-router-dom'
+import ListRentals from './ListRentals/ListRentals.js'
 
 function DetailsUsers() {
     const submitRef = useRef()
@@ -46,7 +47,10 @@ function DetailsUsers() {
                     </Stack>
                 </Grid>
                 <Grid item xs={12} sm={10}>
-                    <FormUsers submitRef={submitRef} user={user} />
+                    <Stack spacing={2}>
+                        <FormUsers submitRef={submitRef} user={user} />
+                        <ListRentals idUser={id} />
+                    </Stack>
                 </Grid>
             </Grid>
         </div>

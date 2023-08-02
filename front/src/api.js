@@ -47,6 +47,10 @@ export function getGame(id) {
     return basiqueGet('games/details', id)
 }
 
+export function getRentals(id) {
+    return basiqueGet('rentals/user', id)
+}
+
 //POST
 function basiquePost(route, data) {
     return fetch(URL + '/API/' + route, {
