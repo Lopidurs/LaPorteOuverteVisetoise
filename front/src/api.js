@@ -82,8 +82,8 @@ export function postNewRental(games, user) {
 }
 
 //PUT
-export function updateGame(data) {
-    return fetch(URL + '/API/games', {
+function basiquePut(route, data) {
+    return fetch(URL + '/API/' + route, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -95,15 +95,14 @@ export function updateGame(data) {
     })
 }
 
+export function updateGame(data) {
+    return basiquePut('games', data)
+}
+
 export function updateUser(data) {
-    return fetch(URL + '/API/users', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then((res) => {
-        if (res.status === 200) return res.json()
-        else throw new Error('Invalid response')
-    })
+    return basiquePut('users', data)
+}
+
+export function updateRental(data) {
+    return basiquePut('rentals', data)
 }

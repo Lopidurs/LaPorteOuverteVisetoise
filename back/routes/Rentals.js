@@ -36,4 +36,19 @@ router.get("/user", async (req, res) => {
     }
 })
 
+router.put("/", async (req, res) => {
+    console.log(req.body)
+    try {
+        const rental = await Rentals.findOne({ where: { id: req.body.id } })
+        if (rental) {
+            await rental.update(req.body)
+            res.json(rental)
+        } else {
+            res.status(404).send('Rental not found')
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error)
+    }
+})
 module.exports = router
