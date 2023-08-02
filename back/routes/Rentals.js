@@ -17,9 +17,23 @@ router.post("/", async (req, res) => {
         }
         res.json(listNewRentals)
     } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
+        console.log(error)
+        res.status(400).send(error)
     }
 })
 
-module.exports = router;
+router.get("/user", async (req, res) => {
+    try {
+        console.log(req.query.id)
+        const listOfRentals = await Rentals.findAll({
+            where: { UserId: req.query.id },
+            include: [Games]
+        })
+        res.json(listOfRentals)
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error)
+    }
+})
+
+module.exports = router

@@ -8,6 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         EndRental: {
             type: DataTypes.DATE,
             allowNull: false
+        },
+        Return: {
+            type: DataTypes.DATE
+        },
+        Comment: {
+            type: DataTypes.STRING
         }
     })
 
