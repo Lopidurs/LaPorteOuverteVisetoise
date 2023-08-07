@@ -3,7 +3,8 @@ const URL = 'http://localhost:3001'
 //GET
 function basiqueGetAll(route) {
     return fetch(URL + '/API/' + route, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include'
     }).then((res) => {
         if (res.status === 200) return res.json()
         else throw new Error('Invalid response')
@@ -12,7 +13,8 @@ function basiqueGetAll(route) {
 
 function basiqueGet(route, id) {
     return fetch(URL + '/API/' + route + '?id=' + id, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include'
     }).then((res) => {
         if (res.status === 200) return res.json()
         else throw new Error('Invalid response')
@@ -55,6 +57,7 @@ export function getRentals(id) {
 function basiquePost(route, data) {
     return fetch(URL + '/API/' + route, {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -81,10 +84,15 @@ export function postNewRental(games, user) {
     return basiquePost('rentals', data)
 }
 
+export function getAccessToken(data) {
+    return basiquePost('users/login', data)
+}
+
 //PUT
 function basiquePut(route, data) {
     return fetch(URL + '/API/' + route, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },

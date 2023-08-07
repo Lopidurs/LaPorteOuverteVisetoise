@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -7,42 +7,49 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
+// import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
+// import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
 import { useNavigate } from 'react-router-dom'
 import Logo from '../../Assets/logo-porte-ouverte-blanc.png'
 
-const pages = [
-    { name: 'Utilisateurs', path: '/ListUsers' },
-    { name: 'Jeux', path: '/ListGames' }
-]
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
-function Header() {
+function Header({ user }) {
+    const [pages, setPages] = useState([])
+
+    useEffect(() => {
+        user && user.isStaff
+            ? setPages([
+                  { name: 'Utilisateurs', path: '/ListUsers' },
+                  { name: 'Jeux', path: '/ListGames' }
+              ])
+            : setPages([])
+    }, [user])
     let navigate = useNavigate()
-    const [anchorElNav, setAnchorElNav] = React.useState(null)
-    const [anchorElUser, setAnchorElUser] = React.useState(null)
+    const [anchorElNav, setAnchorElNav] = useState(null)
+    // const [anchorElUser, setAnchorElUser] = React.useState(null)
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget)
     }
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget)
-    }
+    // const handleOpenUserMenu = (event) => {
+    //     setAnchorElUser(event.currentTarget)
+    // }
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
     }
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null)
-    }
+    // const handleCloseUserMenu = () => {
+    //     setAnchorElUser(null)
+    // }
 
     function handleNavigate(path) {
-        console.log(path)
         handleCloseNavMenu()
         navigate(path)
     }
@@ -173,7 +180,7 @@ function Header() {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    {/* <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -200,10 +207,15 @@ function Header() {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
+                    </Box> */}
                 </Toolbar>
             </Container>
         </AppBar>
     )
 }
+
+Header.propTypes = {
+    user: PropTypes.object
+}
+
 export default Header
