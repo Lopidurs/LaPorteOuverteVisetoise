@@ -20,9 +20,6 @@ function ListRentals({ idUser }) {
     }
 
     useEffect(() => {
-        if (!idUser) {
-            return
-        }
         getRentals(idUser).then((data) => {
             if (data) {
                 setRentals(data)
@@ -72,28 +69,34 @@ function ListRentals({ idUser }) {
         }
     ]
 
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-            {rentals.length > 0 ? (
-                <>
-                    <DataGrid
-                        rows={rentals}
-                        columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5, 10, 20]}
-                        autoHeight
-                    />
-                    <ReturnGameModal rental={selectedRental} onClose={handleCloseModal} />
-                </>
-            ) : (
-                <Typography variant="body1">Aucune location disponible pour ce client.</Typography>
-            )}
-        </div>
-    )
+    if (!idUser) {
+        return
+    } else {
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+                {rentals.length > 0 ? (
+                    <>
+                        <DataGrid
+                            rows={rentals}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5, 10, 20]}
+                            autoHeight
+                        />
+                        <ReturnGameModal rental={selectedRental} onClose={handleCloseModal} />
+                    </>
+                ) : (
+                    <Typography variant="body1">
+                        Aucune location disponible pour ce client.
+                    </Typography>
+                )}
+            </div>
+        )
+    }
 }
 
 ListRentals.propTypes = {
-    idUser: PropTypes.string.isRequired
+    idUser: PropTypes.string
 }
 
 export default ListRentals
