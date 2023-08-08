@@ -91,15 +91,32 @@ router.post("/", async (req, res) => {
             Description: data.Description,
         })
 
-        for (award of data.Awards) {
-            newGame.setAwards(award.id)
-        }
-        for (type of data.Types) {
-            newGame.setTypes(type.id)
-        }
-        for (keyword of data.KeyWords) {
-            newGame.setKeyWords(keyword.id)
-        }
+        const awardsPromises = data.Awards.map(async award => {
+            const [createdAward] = await Awards.findOrCreate({
+                where: { Name: award.Name },
+                defaults: { Name: award.Name }
+            });
+            await newGame.addAward(createdAward);
+        });
+
+        const typesPromises = data.Types.map(async type => {
+            console.log(type)
+            const [createdType] = await Types.findOrCreate({
+                where: { Name: type.Name },
+                defaults: { Name: type.Name }
+            });
+            await newGame.addType(createdType);
+        });
+
+        const keywordsPromises = data.KeyWords.map(async keyword => {
+            const [createdKeyword] = await KeyWords.findOrCreate({
+                where: { Name: keyword.Name },
+                defaults: { Name: keyword.Name }
+            });
+            await newGame.addKeyWord(createdKeyword);
+        });
+
+        await Promise.all([...awardsPromises, ...typesPromises, ...keywordsPromises]);
         res.json(newGame);
     } catch (error) {
         console.log(error);

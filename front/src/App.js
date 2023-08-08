@@ -28,7 +28,6 @@ function App() {
 
     useEffect(() => {
         setUser(JSON.parse(sessionStorage.getItem('user')))
-        console.log(user)
     }, [sessionStorage.getItem('user')])
 
     return (

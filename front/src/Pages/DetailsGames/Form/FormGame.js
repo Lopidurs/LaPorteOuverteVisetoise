@@ -8,9 +8,11 @@ import Select from '@mui/material/Select'
 import Option from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined'
 
 import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 import { getAwards, getKeywords, getTypes, postNewGame } from '../../../api'
+import AddOptionPopup from '../AddOptionPopup/AddOptionPopup'
 
 function FormGame({ submitRef, game }) {
     const validationSchema = yup.object({
@@ -42,6 +44,10 @@ function FormGame({ submitRef, game }) {
     const [types, setTypes] = useState([])
     const [disableStatus, setDisableStatus] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
+
+    const [addKeyword, setAddKeyword] = useState(false)
+    const [addType, setAddType] = useState(false)
+    const [addAward, setAddAward] = useState(false)
 
     useEffect(() => {
         if (!game.Status || game.Status === 'Loué') {
@@ -137,7 +143,18 @@ function FormGame({ submitRef, game }) {
                                 options={types}
                                 isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
-                                renderInput={(params) => <TextField {...params} label="Types" />}
+                                renderInput={(params) => (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <TextField {...params} label="Types" />
+                                        <AddCircleOutlinedIcon
+                                            onClick={() => {
+                                                setAddType(true)
+                                            }}
+                                            color="primary"
+                                            style={{ marginLeft: '10px' }}
+                                        />
+                                    </div>
+                                )}
                                 value={values.Types}
                                 onChange={(e, value) => {
                                     setFieldValue(
@@ -205,7 +222,16 @@ function FormGame({ submitRef, game }) {
                                 isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Mots clés" />
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <TextField {...params} label="Mots clés" />
+                                        <AddCircleOutlinedIcon
+                                            onClick={() => {
+                                                setAddKeyword(true)
+                                            }}
+                                            color="primary"
+                                            style={{ marginLeft: '10px' }}
+                                        />
+                                    </div>
                                 )}
                                 value={values.KeyWords}
                                 onChange={(e, value) => {
@@ -223,7 +249,18 @@ function FormGame({ submitRef, game }) {
                                 options={awards}
                                 isOptionEqualToValue={(option, value) => option.Name === value.Name}
                                 getOptionLabel={(option) => option.Name}
-                                renderInput={(params) => <TextField {...params} label="Prix" />}
+                                renderInput={(params) => (
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <TextField {...params} label="Prix" />
+                                        <AddCircleOutlinedIcon
+                                            onClick={() => {
+                                                setAddAward(true)
+                                            }}
+                                            color="primary"
+                                            style={{ marginLeft: '10px' }}
+                                        />
+                                    </div>
+                                )}
                                 value={values.Awards}
                                 onChange={(e, value) => {
                                     setFieldValue(
@@ -253,6 +290,30 @@ function FormGame({ submitRef, game }) {
                         setOpen={setModalOpen}
                         data={values}
                         type={'game'}
+                    />
+                    <AddOptionPopup
+                        open={addKeyword}
+                        onClose={() => setAddKeyword(false)}
+                        onAddOption={(newOption) => {
+                            setFieldValue('KeyWords', [...values.KeyWords, { Name: newOption }])
+                            setKeywords([...keyWords, { Name: newOption }])
+                        }}
+                    />
+                    <AddOptionPopup
+                        open={addAward}
+                        onClose={() => setAddAward(false)}
+                        onAddOption={(newOption) => {
+                            setFieldValue('Awards', [...values.Awards, { Name: newOption }])
+                            setAwards([...awards, { Name: newOption }])
+                        }}
+                    />
+                    <AddOptionPopup
+                        open={addType}
+                        onClose={() => setAddType(false)}
+                        onAddOption={(newOption) => {
+                            setFieldValue('Types', [...values.Types, { Name: newOption }])
+                            setTypes([...types, { Name: newOption }])
+                        }}
                     />
                 </Box>
             )}
