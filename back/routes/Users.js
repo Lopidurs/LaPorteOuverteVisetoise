@@ -10,7 +10,7 @@ router.get("/", authMiddleware, async (req, res) => {
     res.json(listOfUsers)
 })
 
-router.get("/details", async (req, res) => {
+router.get("/details", authMiddleware, async (req, res) => {
     try {
         const user = await Users.findOne({ where: { id: req.query.id } })
         res.json(user)
@@ -19,7 +19,7 @@ router.get("/details", async (req, res) => {
     }
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", authMiddleware, async (req, res) => {
     const { Email, Password } = req.body;
     try {
         const user = await Users.findOne({ where: { Email } });
@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
     try {
         if (req.body.Password) {
             const hashedPassword = await bcrypt.hash(req.body.Password, 10);
@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.put("/", async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
     try {
         const user = await Users.findOne({ where: { id: req.body.id } })
         if (user) {

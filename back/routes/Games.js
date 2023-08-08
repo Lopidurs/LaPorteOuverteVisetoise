@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Games, Types, KeyWords, Awards } = require("../models");
 
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     try {
         const listOfGames = await Games.findAll({
             include: [
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/details", async (req, res) => {
+router.get("/details", authMiddleware, async (req, res) => {
     try {
         const game = await Games.findOne(
             {
@@ -78,7 +78,7 @@ router.get("/details", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
     try {
         data = req.body
         const newGame = await Games.create({
@@ -124,7 +124,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.put("/", async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
     try {
         data = req.body
         const updateGame = await Games.update({
@@ -158,7 +158,7 @@ router.put("/", async (req, res) => {
     }
 })
 
-router.put("/rent", async (req, res) => {
+router.put("/rent", authMiddleware, async (req, res) => {
     console.log(req.body)
     try {
         Games.update({

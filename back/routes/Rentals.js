@@ -3,7 +3,7 @@ const router = express.Router();
 const { Rentals, Users, Games } = require("../models");
 const { Op } = require('sequelize');
 
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
     try {
         data = req.body
         listNewRentals = []
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.get("/user", async (req, res) => {
+router.get("/user", authMiddleware, async (req, res) => {
     try {
         console.log(req.query.id)
         const listOfRentals = await Rentals.findAll({
@@ -37,7 +37,7 @@ router.get("/user", async (req, res) => {
     }
 })
 
-router.get("/game", async (req, res) => {
+router.get("/game", authMiddleware, async (req, res) => {
     try {
         const listOfRentals = await Rentals.findAll({
             where: {
@@ -55,7 +55,7 @@ router.get("/game", async (req, res) => {
 })
 
 
-router.put("/", async (req, res) => {
+router.put("/", authMiddleware, async (req, res) => {
     console.log(req.body)
     try {
         const rental = await Rentals.findOne({ where: { id: req.body.id } })
