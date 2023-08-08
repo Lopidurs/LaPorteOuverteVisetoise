@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Rentals, Users, Games } = require("../models");
+const { Op } = require('sequelize');
 
 router.post("/", async (req, res) => {
     try {
@@ -35,6 +36,24 @@ router.get("/user", async (req, res) => {
         res.status(400).send(error)
     }
 })
+
+router.get("/game", async (req, res) => {
+    try {
+        const listOfRentals = await Rentals.findAll({
+            where: {
+                GameId: req.query.id,
+                Return: {
+                    [Op.is]: null
+                }
+            }
+        })
+        res.json(listOfRentals)
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error)
+    }
+})
+
 
 router.put("/", async (req, res) => {
     console.log(req.body)

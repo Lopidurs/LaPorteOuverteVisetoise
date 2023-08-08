@@ -53,6 +53,10 @@ export function getRentals(id) {
     return basiqueGet('rentals/user', id)
 }
 
+export function getReservationsForGame(id) {
+    return basiqueGet('rentals/game', id)
+}
+
 //POST
 function basiquePost(route, data) {
     return fetch(URL + '/API/' + route, {
