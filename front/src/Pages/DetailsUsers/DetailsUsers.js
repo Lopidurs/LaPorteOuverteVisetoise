@@ -25,15 +25,17 @@ function DetailsUsers() {
         }, [])
     }
 
+    function handleSave() {
+        submitRef.current.click()
+        navigate(`/ListUsers`)
+    }
+
     return (
         <div className="container">
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={2}>
                     <Stack spacing={2}>
-                        <Button
-                            variant="contained"
-                            type="submit"
-                            onClick={() => submitRef.current.click()}>
+                        <Button variant="contained" type="submit" onClick={() => handleSave}>
                             Enregistrer
                         </Button>
                         {id && (

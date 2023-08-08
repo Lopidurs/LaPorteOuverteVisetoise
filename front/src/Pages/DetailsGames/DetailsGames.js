@@ -24,15 +24,17 @@ function DetailsGames() {
         }, [])
     }
 
+    function handleSave() {
+        submitRef.current.click()
+        navigate(`/ListGames`)
+    }
+
     return (
         <div className="container">
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={2}>
                     <Stack spacing={2}>
-                        <Button
-                            variant="contained"
-                            type="submit"
-                            onClick={() => submitRef.current.click()}>
+                        <Button variant="contained" type="submit" onClick={() => handleSave}>
                             Enregistrer
                         </Button>
                         <Button variant="outlined" onClick={() => navigate(`/ListGames`)}>

@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         Status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: "Disponnible"
+            defaultValue: "Disponible"
         },
         Description: {
             type: DataTypes.TEXT,
