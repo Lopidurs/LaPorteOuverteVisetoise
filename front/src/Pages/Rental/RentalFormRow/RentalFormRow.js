@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -8,10 +9,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import { getGame } from '../../../api'
+import { getGame, getReservationsForGame } from '../../../api'
 
 function RentalFormRow({ index, values, handleChange, remove }) {
     const [game, setGame] = useState({ Name: '', Status: '' })
+    const [reservations, setReservations] = useState([])
 
     useEffect(() => {
         getGame(values.rentals[index].id).then((data) => {
@@ -25,7 +27,36 @@ function RentalFormRow({ index, values, handleChange, remove }) {
                 values.rentals[index].Status = ''
             }
         })
+
+        getReservationsForGame(values.rentals[index].id).then((reservationsData) => {
+            setReservations(reservationsData)
+        })
     }, [values.rentals[index].id])
+
+    function updateStatus() {
+        const beginRentalDate = dayjs(values.rentals[index].BeginRental)
+        const endRentalDate = dayjs(values.rentals[index].EndRental)
+
+        const isMissing = reservations.some((reservation) => {
+            return dayjs(reservation.EndRental).isBefore(beginRentalDate)
+        })
+
+        const isReserved = reservations.some((reservation) => {
+            return !endRentalDate.isBefore(reservation.BeginRental)
+        })
+
+        if (isMissing) return 'Manquant'
+        if (isReserved) return 'Non disponible'
+        return ''
+    }
+
+    useEffect(() => {
+        const newStatus = updateStatus()
+        if (newStatus !== '') {
+            setGame((game) => ({ ...game, Status: newStatus }))
+            values.rentals[index].Status = newStatus
+        }
+    }, [values.rentals[index].BeginRental, values.rentals[index].EndRental, reservations])
 
     return (
         <Box my={2}>
