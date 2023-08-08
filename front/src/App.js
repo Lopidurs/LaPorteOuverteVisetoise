@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 import ListGames from './Pages/ListGames/ListGames.js'
-import Home from './Pages/Home/Home.js'
+// import Home from './Pages/Home/Home.js'
 import DetailsGames from './Pages/DetailsGames/DetailsGames'
 import ListUsers from './Pages/ListUsers/ListUsers'
 import DetailsUsers from './Pages/DetailsUsers/DetailsUsers'
@@ -36,10 +36,9 @@ function App() {
                 <BrowserRouter>
                     <Header user={user} />
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
                         {user && user.isStaff ? (
                             <>
+                                <Route path="/" element={<ListUsers />} />
                                 <Route path="/listGames" element={<ListGames />} />
                                 <Route path="/detailsGames" element={<DetailsGames />} />
                                 <Route path="/detailsGames/:id" element={<DetailsGames />} />
@@ -48,7 +47,12 @@ function App() {
                                 <Route path="/detailsUsers" element={<DetailsUsers />} />
                                 <Route path="/rental/:id" element={<Rental />} />
                             </>
-                        ) : null}
+                        ) : (
+                            <>
+                                <Route path="/" element={<Login />} />
+                                <Route path="/login" element={<Login />} />
+                            </>
+                        )}
                     </Routes>
                     <Footer />
                 </BrowserRouter>

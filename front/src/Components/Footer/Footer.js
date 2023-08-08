@@ -14,7 +14,10 @@ const Footer = () => {
                 alignItems: 'center',
                 background: '#2f2e2e',
                 padding: '10px',
-                color: '#fff'
+                color: '#fff',
+                position: 'fixed',
+                bottom: 0,
+                width: '100%'
             }}>
             <Box
                 sx={{
