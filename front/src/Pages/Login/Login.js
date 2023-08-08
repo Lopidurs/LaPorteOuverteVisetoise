@@ -5,8 +5,9 @@ import { TextField, Typography, Container, Box, Button } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { getAccessToken } from '../../api'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-const Login = () => {
+const Login = ({ setUser }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
 
@@ -23,8 +24,8 @@ const Login = () => {
     async function handleLogin(values) {
         try {
             await getAccessToken(values).then((res) => {
-                console.log(res)
                 sessionStorage.setItem('user', JSON.stringify(res))
+                setUser(res)
                 navigate('/listUsers')
             })
         } catch (error) {
@@ -88,6 +89,10 @@ const Login = () => {
             </div>
         </Container>
     )
+}
+
+Login.propTypes = {
+    setUser: PropTypes.func
 }
 
 export default Login
