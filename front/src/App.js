@@ -28,7 +28,8 @@ function App() {
 
     useEffect(() => {
         setUser(JSON.parse(sessionStorage.getItem('user')))
-    }, [])
+        console.log(user)
+    }, [sessionStorage.getItem('user')])
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -49,8 +50,8 @@ function App() {
                             </>
                         ) : (
                             <>
-                                <Route path="/" element={<Login />} />
-                                <Route path="/login" element={<Login />} />
+                                <Route path="/" element={<Login setUser={setUser} />} />
+                                <Route path="/login" element={<Login setUser={setUser} />} />
                             </>
                         )}
                     </Routes>
