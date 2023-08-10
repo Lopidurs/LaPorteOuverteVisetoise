@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Rentals, Users, Games } = require("../models");
 const { Op } = require('sequelize');
+const authMiddleware = require('../middleware/authMiddleware')
 
 router.post("/", authMiddleware, async (req, res) => {
     try {

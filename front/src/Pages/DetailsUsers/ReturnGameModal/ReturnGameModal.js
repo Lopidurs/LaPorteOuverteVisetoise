@@ -26,8 +26,7 @@ function ReturnGameModal({ rental, onClose }) {
         if (rental?.Return) {
             const updatedRental = {
                 ...rental,
-                Return: null,
-                Comment: null
+                Comment: comment
             }
             updateRental(updatedRental)
         } else {

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Games, Types, KeyWords, Awards } = require("../models");
+const authMiddleware = require('../middleware/authMiddleware')
 
 router.get("/", authMiddleware, async (req, res) => {
     try {
