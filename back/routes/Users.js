@@ -19,7 +19,7 @@ router.get("/details", authMiddleware, async (req, res) => {
     }
 })
 
-router.post("/login", authMiddleware, async (req, res) => {
+router.post("/login", async (req, res) => {
     const { Email, Password } = req.body;
     try {
         const user = await Users.findOne({ where: { Email } });

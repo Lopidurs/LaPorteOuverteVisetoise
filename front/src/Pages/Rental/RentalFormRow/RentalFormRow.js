@@ -14,6 +14,8 @@ import { getGame, getReservationsForGame } from '../../../api'
 function RentalFormRow({ index, values, handleChange, remove }) {
     const [game, setGame] = useState({ Name: '', Status: '' })
     const [reservations, setReservations] = useState([])
+    const [beginRentalDate, setBeginRentalDate] = useState(dayjs(values.rentals[index].BeginRental))
+    const [endRentalDate, setEndRentalDate] = useState(dayjs(values.rentals[index].EndRental))
 
     useEffect(() => {
         getGame(values.rentals[index].id).then((data) => {
@@ -34,29 +36,34 @@ function RentalFormRow({ index, values, handleChange, remove }) {
     }, [values.rentals[index].id])
 
     function updateStatus() {
-        const beginRentalDate = dayjs(values.rentals[index].BeginRental)
-        const endRentalDate = dayjs(values.rentals[index].EndRental)
-
         const isMissing = reservations.some((reservation) => {
-            return dayjs(reservation.EndRental).isBefore(beginRentalDate)
+            return dayjs(reservation.EndRental).isBefore(dayjs())
         })
 
-        const isReserved = reservations.some((reservation) => {
-            return !endRentalDate.isBefore(reservation.BeginRental)
+        const isAvailable = reservations.some((reservation) => {
+            return (
+                endRentalDate.isBefore(reservation.BeginRental) ||
+                beginRentalDate.isAfter(reservation.EndRental)
+            )
         })
 
         if (isMissing) return 'Manquant'
-        if (isReserved) return 'Non disponible'
-        return ''
+        if (isAvailable) return 'Disponible'
+        return 'Non disponible'
     }
 
     useEffect(() => {
-        const newStatus = updateStatus()
-        if (newStatus !== '') {
+        if (
+            game.Status === 'Disponible' ||
+            game.Status === 'Manquant' ||
+            game.Status === 'Non disponible'
+        ) {
+            const newStatus = updateStatus()
+
             setGame((game) => ({ ...game, Status: newStatus }))
             values.rentals[index].Status = newStatus
         }
-    }, [values.rentals[index].BeginRental, values.rentals[index].EndRental, reservations])
+    }, [beginRentalDate, endRentalDate, reservations])
 
     return (
         <Box my={2}>
@@ -75,9 +82,12 @@ function RentalFormRow({ index, values, handleChange, remove }) {
                 <Grid item xs={12} sm={2}>
                     <DatePicker
                         required
-                        label="Date début rental"
+                        label="Date début location"
                         value={dayjs(values.rentals[index].BeginRental)}
-                        onChange={handleChange}
+                        onChange={(date) => {
+                            values.rentals[index].EndRental = dayjs(date)
+                            setBeginRentalDate(dayjs(date))
+                        }}
                         format="DD/MM/YYYY"
                         name={`rentals.${index}.BeginRental`}
                     />
@@ -85,9 +95,12 @@ function RentalFormRow({ index, values, handleChange, remove }) {
                 <Grid item xs={12} sm={2}>
                     <DatePicker
                         required
-                        label="Date fin rental"
+                        label="Date fin location"
                         value={dayjs(values.rentals[index].EndRental)}
-                        onChange={handleChange}
+                        onChange={(date) => {
+                            values.rentals[index].EndRental = dayjs(date)
+                            setEndRentalDate(dayjs(date))
+                        }}
                         format="DD/MM/YYYY"
                         name={`rentals.${index}.EndRental`}
                     />

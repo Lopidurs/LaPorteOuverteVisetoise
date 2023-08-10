@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
+import { useNavigate } from 'react-router-dom'
 
 import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 
@@ -18,6 +19,7 @@ import { postNewUser } from '../../../api'
 
 function FormUsers({ submitRef, user }) {
     const [phone, setPhone] = useState('')
+    let navigate = useNavigate()
 
     const validationSchema = yup.object({
         FirstName: yup.string().required('Requis'),
@@ -31,7 +33,8 @@ function FormUsers({ submitRef, user }) {
         Address: yup.string().required('Requis'),
         Association: yup.string(),
         City: yup.string().required('Requis'),
-        ZipCode: yup.string().required('Requis')
+        ZipCode: yup.string().required('Requis'),
+        Email: yup.string().email('Email invalide').required('Requis')
     })
 
     const initialValues = {
@@ -55,6 +58,7 @@ function FormUsers({ submitRef, user }) {
             setModalOpen(true)
         } else {
             postNewUser(newUser)
+            navigate(`/ListUsers`)
         }
     }
 

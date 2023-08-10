@@ -9,6 +9,11 @@ export default function UpdateModal({ open, setOpen, data, type }) {
     function handleClose() {
         setOpen(false)
     }
+
+    function handleSave() {
+        type === 'game' ? updateGame(data) : updateUser(data)
+        setOpen(false)
+    }
     return (
         <Dialog
             open={open}
@@ -19,11 +24,7 @@ export default function UpdateModal({ open, setOpen, data, type }) {
                 Etes-vous sûr de vouloir enregistrer les modifications?
             </DialogTitle>
             <DialogActions>
-                <Button
-                    variant="contained"
-                    color="success"
-                    mr={1}
-                    onClick={() => (type === 'game' ? updateGame(data) : updateUser(data))}>
+                <Button variant="contained" color="success" mr={1} onClick={handleSave}>
                     Oui
                 </Button>
                 <Button variant="contained" color="error" onClick={handleClose}>
