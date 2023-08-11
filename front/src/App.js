@@ -14,6 +14,7 @@ import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
 import Login from './Pages/Login/Login'
 import PrivacyPolicy from './Pages/PrivacyPolicy/PrivacyPolicy'
+import NotFoundPage from './Pages/NotFoundPage/NotFoundPage'
 
 function App() {
     const theme = createTheme({
@@ -55,6 +56,7 @@ function App() {
                                         <Route path="/detailsUsers" element={<DetailsUsers />} />
                                         <Route path="/rental/:id" element={<Rental />} />
                                         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+                                        <Route path="*" element={<NotFoundPage />} />
                                     </>
                                 ) : (
                                     <>
@@ -64,6 +66,7 @@ function App() {
                                             element={<Login setUser={setUser} />}
                                         />
                                         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+                                        <Route path="*" element={<NotFoundPage />} />
                                     </>
                                 )}
                             </Routes>
