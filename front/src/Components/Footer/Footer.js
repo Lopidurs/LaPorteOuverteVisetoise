@@ -15,9 +15,11 @@ const Footer = () => {
                 background: '#2f2e2e',
                 padding: '10px',
                 color: '#fff',
-                position: 'fixed',
                 bottom: 0,
-                width: '100%'
+                width: '100%',
+                maxWidth: '100vw',
+                boxSizing: 'border-box',
+                overflowX: 'hidden'
             }}>
             <Box
                 sx={{
@@ -25,14 +27,8 @@ const Footer = () => {
                     alignItems: 'center',
                     width: '25%'
                 }}>
-                <Link href="#" sx={linkStyles}>
+                <Link href="/privacyPolicy" sx={linkStyles}>
                     Mentions légales
-                </Link>
-                <Link href="#" sx={linkStyles}>
-                    Politique en matière de cookies
-                </Link>
-                <Link href="#" sx={linkStyles}>
-                    Politique de confidentialité
                 </Link>
                 <Link href="#" sx={linkStyles}>
                     Crédits
@@ -62,7 +58,7 @@ const Footer = () => {
                     src={Logo}
                 />
                 <Typography variant="caption" color="inherit">
-                    Copyright ©2022. Nathan Sancke
+                    Copyright ©2023. Nathan Sancke Squelin
                 </Typography>
             </Box>
 
@@ -73,7 +69,7 @@ const Footer = () => {
                     width: '25%',
                     justifyContent: 'center'
                 }}>
-                <Link href="https://www.facebook.com/your_page" sx={linkStyles}>
+                <Link href="https://www.facebook.com/ASBL.Porte.Ouverte/" sx={linkStyles}>
                     <FacebookIcon />
                 </Link>
             </Box>
