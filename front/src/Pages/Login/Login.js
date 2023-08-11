@@ -34,60 +34,66 @@ const Login = ({ setUser }) => {
     }
 
     return (
-        <Container maxWidth="xs">
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    marginTop: '5rem'
-                }}>
-                <AccountCircleIcon style={{ fontSize: 64 }} color="primary" />
-                <Typography variant="h5" component="h1" color="primary" gutterBottom>
-                    Connexion
-                </Typography>
-                <Formik
-                    enableReinitialize={true}
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={handleLogin}>
-                    {({ handleChange, values, touched, errors, handleSubmit }) => (
-                        <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
-                            <TextField
-                                required
-                                fullWidth
-                                name="Email"
-                                label="Email"
-                                value={values.Email}
-                                onChange={handleChange}
-                                error={touched.Email && Boolean(errors.Email)}
-                                helperText={touched.Email && errors.Email}
-                                sx={{ mb: 2 }}
-                            />
-                            <TextField
-                                label="Mot de passe"
-                                type="password"
-                                fullWidth
-                                name="Password"
-                                value={values.Password}
-                                onChange={handleChange}
-                                error={touched.Password && Boolean(errors.Password)}
-                                helperText={touched.Password && errors.Password}
-                                sx={{ mb: 2 }}
-                            />
-                            {errorMessage && (
-                                <Typography align="center" style={{ color: 'red' }}>
-                                    {errorMessage}
-                                </Typography>
-                            )}
-                            <Button type="submit" variant="contained" color="primary" fullWidth>
-                                Se connecter
-                            </Button>
-                        </Box>
-                    )}
-                </Formik>
-            </div>
-        </Container>
+        <div className="container">
+            <Container maxWidth="xs">
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        marginTop: '5rem'
+                    }}>
+                    <AccountCircleIcon style={{ fontSize: 64 }} color="primary" />
+                    <Typography variant="h5" component="h1" color="primary" gutterBottom>
+                        Connexion
+                    </Typography>
+                    <Formik
+                        enableReinitialize={true}
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={handleLogin}>
+                        {({ handleChange, values, touched, errors, handleSubmit }) => (
+                            <Box
+                                component="form"
+                                onSubmit={handleSubmit}
+                                noValidate
+                                autoComplete="off">
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="Email"
+                                    label="Email"
+                                    value={values.Email}
+                                    onChange={handleChange}
+                                    error={touched.Email && Boolean(errors.Email)}
+                                    helperText={touched.Email && errors.Email}
+                                    sx={{ mb: 2 }}
+                                />
+                                <TextField
+                                    label="Mot de passe"
+                                    type="password"
+                                    fullWidth
+                                    name="Password"
+                                    value={values.Password}
+                                    onChange={handleChange}
+                                    error={touched.Password && Boolean(errors.Password)}
+                                    helperText={touched.Password && errors.Password}
+                                    sx={{ mb: 2 }}
+                                />
+                                {errorMessage && (
+                                    <Typography align="center" style={{ color: 'red' }}>
+                                        {errorMessage}
+                                    </Typography>
+                                )}
+                                <Button type="submit" variant="contained" color="primary" fullWidth>
+                                    Se connecter
+                                </Button>
+                            </Box>
+                        )}
+                    </Formik>
+                </div>
+            </Container>
+        </div>
     )
 }
 

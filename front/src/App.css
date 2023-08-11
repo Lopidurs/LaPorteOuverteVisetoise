@@ -6,9 +6,11 @@
     margin-right: auto;
     margin-left: auto;
     padding: 1rem;
-    min-height: calc(100vh - 126px);
+    min-height: calc(100vh - 187px);
+    overflow: auto; /* Ajout de cette ligne pour activer le défilement */
 }
 
 body {
-    margin: 0px;
+    height: 100%;
+    margin: 0;
 }
