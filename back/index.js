@@ -48,7 +48,7 @@ app.use('/API/rentals', RentalsRouter);
 //     })
 const server = awsServerlessExpress.createServer(app);
 
-exports.handler = (event, context) => {
+exports.handler = async (event, context) => {
     awsServerlessExpress.proxy(server, event, context);
 };
 
