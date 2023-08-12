@@ -38,21 +38,20 @@ app.use('/API/rentals', RentalsRouter);
 
 
 
-if (env === 'development') {
-    db.sequelize.sync().then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server listening on ${PORT}`)
-        });
-    }).catch((err) => {
-        console.log(err)
-    })
-} else {
-    const server = awsServerlessExpress.createServer(app);
+// if (env === 'development') {
+//     db.sequelize.sync().then(() => {
+//         app.listen(PORT, () => {
+//             console.log(`Server listening on ${PORT}`)
+//         });
+//     }).catch((err) => {
+//         console.log(err)
+//     })
+const server = awsServerlessExpress.createServer(app);
 
-    exports.handler = (event, context) => {
-        awsServerlessExpress.proxy(server, event, context);
-    };
-}
+export const handler = async (event, context) => {
+    awsServerlessExpress.proxy(server, event, context);
+};
+
 
 
 
