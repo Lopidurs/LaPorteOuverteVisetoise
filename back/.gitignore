@@ -3,3 +3,5 @@
 /config
 /coverage
 .env
+jspm_packages
+.serverless
