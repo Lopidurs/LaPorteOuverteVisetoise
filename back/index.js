@@ -1,4 +1,4 @@
-const awsServerlessExpress = require('aws-serverless-express');
+const serverless = require("serverless-http");
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -17,6 +17,7 @@ app.use(cookieParser());
 
 const db = require('./models')
 
+db.sequelize.sync()
 // Routers
 const GameRouter = require('./routes/Games');
 app.use('/API/games', GameRouter);
@@ -46,11 +47,9 @@ app.use('/API/rentals', RentalsRouter);
 //     }).catch((err) => {
 //         console.log(err)
 //     })
-const server = awsServerlessExpress.createServer(app);
 
-export const handler = async (event, context) => {
-    awsServerlessExpress.proxy(server, event, context);
-};
+module.exports.handler = serverless(app);
+
 
 
 

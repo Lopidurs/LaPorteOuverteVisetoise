@@ -1,4 +1,4 @@
-const URL = 'http://localhost:3001'
+const URL = 'https://sxktggv4ek.execute-api.eu-west-2.amazonaws.com'
 
 //GET
 function basiqueGetAll(route) {
