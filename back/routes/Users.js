@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { Users } = require("../models")
-const bcrypt = require('bcrypt')
+const argon2 = require('argon2');
 const authMiddleware = require('../middleware/authMiddleware')
 
 router.get("/", authMiddleware, async (req, res) => {
@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ message: 'Identifiants incorrects' });
         }
 
-        const isPasswordValid = await bcrypt.compare(Password, user.Password);
+        const isPasswordValid = await argon2.verify(user.Password, Password);
 
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Identifiants incorrects' });
@@ -36,33 +36,35 @@ router.post("/login", async (req, res) => {
 
         const accessToken = jwt.sign({ userId: user.id, isStaff: user.isStaff, isAdmin: user.isAdmin }, process.env.JWT_SECRET, {
             expiresIn: '24h',
-        })
+        });
 
-        user.Password = undefined
+        user.Password = undefined;
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            sameSite: 'strict',
-            secure: true
-        }).status(200).json(user)
+            sameSite: 'none',
+            secure: true,
+            domain: 'nathansancke.com'
+        }).status(200).json(user);
     } catch (error) {
+        console.log(error)
         res.status(400).send(error);
     }
-})
+});
 
 router.post("/", authMiddleware, async (req, res) => {
     try {
         if (req.body.Password) {
-            const hashedPassword = await bcrypt.hash(req.body.Password, 10);
+            const hashedPassword = await argon2.hash(req.body.Password);
             req.body.Password = hashedPassword;
         }
-        req.body.id = null
+        req.body.id = null;
         const newUser = await Users.create(req.body);
-        newUser.Password = undefined
+        newUser.Password = undefined;
         res.json(newUser);
     } catch (error) {
         res.status(400).send(error);
     }
-})
+});
 
 router.put("/", authMiddleware, async (req, res) => {
     try {

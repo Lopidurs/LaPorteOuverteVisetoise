@@ -1,4 +1,4 @@
-const awsServerlessExpress = require('aws-serverless-express');
+const serverless = require("serverless-http");
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -9,7 +9,14 @@ const PORT = process.env.PORT || 3001
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: [
+        'http://localhost:3000',
+        'http://lpov.s3-website.eu-west-2.amazonaws.com',
+        'http://www.nathansancke.com',
+        'http://nathansancke.com',
+        'https://www.nathansancke.com',
+        'https://nathansancke.com'
+    ],
     credentials: true
 }));
 app.use(express.json());
@@ -38,7 +45,7 @@ app.use('/API/rentals', RentalsRouter);
 
 
 
-// if (env === 'development') {
+// if (env !== 'production') {
 //     db.sequelize.sync().then(() => {
 //         app.listen(PORT, () => {
 //             console.log(`Server listening on ${PORT}`)
@@ -46,13 +53,10 @@ app.use('/API/rentals', RentalsRouter);
 //     }).catch((err) => {
 //         console.log(err)
 //     })
-const server = awsServerlessExpress.createServer(app);
 
-export const handler = async (event, context) => {
-    awsServerlessExpress.proxy(server, event, context);
-};
+//     module.exports = app;
+// } else {
+db.sequelize.sync();
+module.exports.handler = serverless(app);
+// }
 
-
-
-
-module.exports = app;
