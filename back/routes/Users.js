@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ message: 'Identifiants incorrects' });
         }
 
-        const isPasswordValid = await argon2.verify(user.Password, Password); 
+        const isPasswordValid = await argon2.verify(user.Password, Password);
 
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Identifiants incorrects' });
@@ -41,10 +41,11 @@ router.post("/login", async (req, res) => {
         user.Password = undefined;
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             secure: true
         }).status(200).json(user);
     } catch (error) {
+        console.log(error)
         res.status(400).send(error);
     }
 });
