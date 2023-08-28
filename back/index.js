@@ -17,7 +17,6 @@ app.use(cookieParser());
 
 const db = require('./models')
 
-db.sequelize.sync()
 // Routers
 const GameRouter = require('./routes/Games');
 app.use('/API/games', GameRouter);
@@ -39,7 +38,7 @@ app.use('/API/rentals', RentalsRouter);
 
 
 
-// if (env === 'development') {
+// if (env !== 'production') {
 //     db.sequelize.sync().then(() => {
 //         app.listen(PORT, () => {
 //             console.log(`Server listening on ${PORT}`)
@@ -48,10 +47,9 @@ app.use('/API/rentals', RentalsRouter);
 //         console.log(err)
 //     })
 
-module.exports.handler = serverless(app);
+//     module.exports = app;
+// } else {
+    db.sequelize.sync();
+    module.exports.handler = serverless(app);
+// }
 
-
-
-
-
-module.exports = app;
