@@ -42,7 +42,8 @@ router.post("/login", async (req, res) => {
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             sameSite: 'none',
-            secure: true
+            secure: true,
+            domain: 'www.nathansancke.com'
         }).status(200).json(user);
     } catch (error) {
         console.log(error)
