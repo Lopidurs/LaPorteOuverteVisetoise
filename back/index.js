@@ -9,7 +9,14 @@ const PORT = process.env.PORT || 3001
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: [
+        'http://localhost:3000',
+        'http://lpov.s3-website.eu-west-2.amazonaws.com',
+        'http://www.nathansancke.com',
+        'http://nathansancke.com',
+        'https://www.nathansancke.com',
+        'https://nathansancke.com'
+    ],
     credentials: true
 }));
 app.use(express.json());
@@ -49,7 +56,7 @@ app.use('/API/rentals', RentalsRouter);
 
 //     module.exports = app;
 // } else {
-    db.sequelize.sync();
-    module.exports.handler = serverless(app);
+db.sequelize.sync();
+module.exports.handler = serverless(app);
 // }
 
