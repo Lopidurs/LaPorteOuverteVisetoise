@@ -127,32 +127,53 @@ router.post("/", authMiddleware, async (req, res) => {
 
 router.put("/", authMiddleware, async (req, res) => {
     try {
-        data = req.body
-        const updateGame = await Games.update({
+        const data = req.body
+        const existingGame = await Games.findByPk(data.Id);
+
+        if (!existingGame) {
+            return res.status(404).json({ message: "Game not found" });
+        }
+
+        await existingGame.update({
             Name: data.Name,
             Brand: data.Brand,
             Age: data.Age,
             MinPlayer: data.MinPlayer,
             MaxPlayer: data.MaxPlayer,
-            Status: data.Status,
             Release: data.Release ? data.Release : null,
             Description: data.Description,
-        }, {
-            where: {
-                id: data.Id
-            }
-        })
+        });
 
-        for (award of data.Awards) {
-            updateGame.setAwards(award.id)
-        }
-        for (type of data.Types) {
-            updateGame.setTypes(type.id)
-        }
-        for (keyword of data.KeyWords) {
-            updateGame.setKeyWords(keyword.id)
-        }
-        res.json(updateGame);
+        await existingGame.setAwards([]);
+        const awardsPromises = data.Awards.map(async award => {
+            const [createdAward] = await Awards.findOrCreate({
+                where: { Name: award.Name },
+                defaults: { Name: award.Name }
+            });
+            await existingGame.addAward(createdAward);
+        });
+
+
+        await existingGame.setTypes([]);
+        const typesPromises = data.Types.map(async type => {
+            const [createdType] = await Types.findOrCreate({
+                where: { Name: type.Name },
+                defaults: { Name: type.Name }
+            });
+            await existingGame.addType(createdType);
+        });
+
+        await existingGame.setKeyWords([]);
+        const keywordsPromises = data.KeyWords.map(async keyword => {
+            const [createdKeyword] = await KeyWords.findOrCreate({
+                where: { Name: keyword.Name },
+                defaults: { Name: keyword.Name }
+            });
+            await existingGame.addKeyWord(createdKeyword);
+        });
+
+        await Promise.all([...awardsPromises, ...typesPromises, ...keywordsPromises]);
+        res.json(existingGame);
     } catch (error) {
         console.log(error);
         res.status(400).send(error);

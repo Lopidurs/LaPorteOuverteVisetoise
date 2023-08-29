@@ -9,12 +9,15 @@ import Option from '@mui/material/MenuItem'
 import Grid from '@mui/material/Grid'
 import PropTypes from 'prop-types'
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined'
+import { useNavigate } from 'react-router-dom'
 
 import UpdateModal from '../../../Components/UpdateModal/UpdateModal'
 import { getAwards, getKeywords, getTypes, postNewGame } from '../../../api'
 import AddOptionPopup from '../AddOptionPopup/AddOptionPopup'
 
 function FormGame({ submitRef, game }) {
+    const navigate = useNavigate()
+
     const validationSchema = yup.object({
         Name: yup.string().required('Requis'),
         Age: yup.number().required('Requis').min(0),
@@ -80,7 +83,9 @@ function FormGame({ submitRef, game }) {
         if (game.id) {
             setModalOpen(true)
         } else {
-            postNewGame(newGame)
+            postNewGame(newGame).then(() => {
+                navigate(`/ListGames`)
+            })
         }
     }
     return (

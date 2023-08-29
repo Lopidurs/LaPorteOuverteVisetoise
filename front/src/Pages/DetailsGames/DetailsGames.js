@@ -26,7 +26,6 @@ function DetailsGames() {
 
     function handleSave() {
         submitRef.current.click()
-        navigate(`/ListGames`)
     }
 
     return (
