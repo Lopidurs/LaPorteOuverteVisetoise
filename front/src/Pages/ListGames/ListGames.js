@@ -31,14 +31,6 @@ function ListGames() {
         })
     }, [])
 
-    function formDate(date) {
-        try {
-            const dateArray = date.split('-')
-            return dateArray[0]
-        } catch {
-            return ''
-        }
-    }
     const rows = ListGames.map((game) => {
         return {
             id: game.id,
@@ -53,7 +45,7 @@ function ListGames() {
             KeyWords: game.KeyWords.map((keyWord) => {
                 return keyWord.Name
             }).join(', '),
-            Release: formDate(game.Release),
+            Release: game.Release,
             Awards: game.Awards.map((award) => {
                 return award.Name
             }).join(', '),
