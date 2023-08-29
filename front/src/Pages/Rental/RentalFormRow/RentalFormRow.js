@@ -36,27 +36,28 @@ function RentalFormRow({ index, values, handleChange, remove }) {
     }, [values.rentals[index].id])
 
     function updateStatus() {
+        console.log(reservations)
         const isMissing = reservations.some((reservation) => {
             return dayjs(reservation.EndRental).isBefore(dayjs())
         })
 
-        const isAvailable = reservations.some((reservation) => {
-            return (
-                endRentalDate.isBefore(reservation.BeginRental) ||
+        const isNotAvailable = reservations.some((reservation) => {
+            return !(
+                dayjs(reservation.BeginRental).isAfter(endRentalDate) ||
                 beginRentalDate.isAfter(reservation.EndRental)
             )
         })
 
         if (isMissing) return 'Manquant'
-        if (isAvailable) return 'Disponible'
-        return 'Non disponible'
+        if (isNotAvailable) return 'Non Disponible'
+        return 'Disponible'
     }
 
     useEffect(() => {
         if (
             game.Status === 'Disponible' ||
             game.Status === 'Manquant' ||
-            game.Status === 'Non disponible'
+            game.Status === 'Non Disponible'
         ) {
             const newStatus = updateStatus()
 
@@ -85,7 +86,7 @@ function RentalFormRow({ index, values, handleChange, remove }) {
                         label="Date début location"
                         value={dayjs(values.rentals[index].BeginRental)}
                         onChange={(date) => {
-                            values.rentals[index].EndRental = dayjs(date)
+                            values.rentals[index].BeginRental = dayjs(date)
                             setBeginRentalDate(dayjs(date))
                         }}
                         format="DD/MM/YYYY"
