@@ -20,11 +20,13 @@ function ListRentals({ idUser }) {
     }
 
     useEffect(() => {
-        getRentals(idUser).then((data) => {
-            if (data) {
-                setRentals(data)
-            }
-        })
+        if (idUser) {
+            getRentals(idUser).then((data) => {
+                if (data) {
+                    setRentals(data)
+                }
+            })
+        }
     }, [idUser, selectedRental])
 
     const columns = [
