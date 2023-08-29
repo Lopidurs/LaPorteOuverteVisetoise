@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            domain: 'www.nathansancke.com'
+            domain: 'nathansancke.com'
         }).status(200).json(user);
     } catch (error) {
         console.log(error)
