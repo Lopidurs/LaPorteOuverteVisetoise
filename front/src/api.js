@@ -1,4 +1,4 @@
-const URL = 'https://sxktggv4ek.execute-api.eu-west-2.amazonaws.com'
+const URL = 'https://api.nathansancke.com'
 
 //GET
 function basiqueGetAll(route) {
