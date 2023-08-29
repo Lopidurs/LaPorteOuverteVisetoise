@@ -1,4 +1,4 @@
-name: Upload Website
+name: Upload front Website
 
 on:
   push:
@@ -10,15 +10,12 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
     steps:
     - uses: actions/checkout@master
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16.x'
         cache: 'npm'
         cache-dependency-path: 'front/package.json'
     - run: npm i
