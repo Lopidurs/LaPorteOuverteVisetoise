@@ -47,7 +47,7 @@ function FormUsers({ submitRef, user }) {
         City: user.City ?? '',
         Association: user.Association ?? '',
         ZipCode: user.ZipCode ?? '',
-        AgreesImageRights: user.AgreesImageRights ?? '',
+        AgreesImageRights: user.AgreesImageRights ?? false,
         createdAt: user.createdAt ?? ''
     }
 
@@ -57,8 +57,9 @@ function FormUsers({ submitRef, user }) {
         if (user.id) {
             setModalOpen(true)
         } else {
-            postNewUser(newUser)
-            navigate(`/ListUsers`)
+            postNewUser(newUser).then(() => {
+                navigate(`/ListUsers`)
+            })
         }
     }
 
