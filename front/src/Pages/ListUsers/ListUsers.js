@@ -51,7 +51,7 @@ function ListUsers() {
                 </Button>
             </Grid>
             <StyledEngineProvider injectFirst>
-                <div style={{ height: 400, width: '100%' }}>
+                <div style={{ height: '800px', width: '100%' }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
